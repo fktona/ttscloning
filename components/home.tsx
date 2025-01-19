@@ -3,7 +3,7 @@
 import Image from "next/image";
 import CustomButton from "@/components/customButton";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <div className="h-full font-inter w-full flex flex-col items-center justify-between">
       <div className=" w-full h-full    flex items-start  justify-center text-center">

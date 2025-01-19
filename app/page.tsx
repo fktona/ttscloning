@@ -1,16 +1,16 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import About from "./about";
-import Home from "./home";
-import Talk from "./talk";
-import TokenomicsContent from "./token";
+import About from "../components/about";
+import HomePage from "../components/home";
+import Talk from "../components/talk";
+import TokenomicsContent from "../components/token";
 import { useAppContext } from "./context/context";
 import { AIWrapper } from "@/components/AiWrapper";
 
 // ... (keep the pageVariants, pageTransition, and AIWrapper as before)
 
-export default function HomePage() {
+export default function Home() {
   const { state } = useAppContext();
 
   return (
@@ -18,7 +18,7 @@ export default function HomePage() {
       <AnimatePresence mode="wait">
         {state.home && (
           <AIWrapper key="home">
-            <Home />
+            <HomePage />
           </AIWrapper>
         )}
         {state.about && (

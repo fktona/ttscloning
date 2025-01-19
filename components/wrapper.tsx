@@ -1,5 +1,5 @@
 "use client";
-import { useAppContext } from "./context/context";
+import { useAppContext } from "@/app/context/context";
 
 function Wrapper({ children }: { children: React.ReactNode }) {
   const { show } = useAppContext();

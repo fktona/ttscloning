@@ -8,7 +8,7 @@ import { AnimatePresence } from "framer-motion";
 import { ppInter, ppbyte } from "./fonts/font";
 import React from "react";
 import { Suspense } from "react";
-import Wrapper from "./wrapper";
+import Wrapper from "@/components/wrapper";
 
 export const meta: Metadata = {
   title: "TRUTH INTELIGENCE",
