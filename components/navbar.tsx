@@ -6,7 +6,6 @@ import CustomButton from "./customButton";
 import Image from "next/image";
 import { useAppContext } from "@/app/context/context";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 import { Github, Twitter } from "lucide-react";
 
 const AnimatedButtonText = ({
