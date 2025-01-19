@@ -7,6 +7,7 @@ import Footer from "@/components/footer";
 import AppProvider, { useAppContext } from "./context/context";
 import { AnimatePresence } from "framer-motion";
 import { ppInter, ppbyte } from "./fonts/font";
+import { useEffect, useState } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,13 +25,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const { state } = useAppContext();
-  console.log(state);
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    console.log(state);
+    if (state.home) {
+      setShow(false);
+    } else {
+      setShow(true);
+    }
+  }, [state]);
   return (
     <html lang="en">
       <body
         className={`${ppInter.variable} ${ppbyte.variable} overflow-x-hidden antialiased isolate`}
       >
-        {state.home && (
+        {!show && (
           <>
             <iframe
               src="https://my.spline.design/particlenebulacopy-5f3382e8ff624a908a21b10a995d4d52/"
