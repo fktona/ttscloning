@@ -1,5 +1,3 @@
-"use client";
-
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -11,7 +9,11 @@ import { ppInter, ppbyte } from "./fonts/font";
 import React from "react";
 import Wrapper from "./wrapper";
 
-// Wrapper component for the iframe and background
+export const meta: Metadata = {
+  title: "TRUTH INTELIGENCE",
+  description:
+    "Experience the first ever AI intelligence to land on Truth Social",
+};
 
 export default function RootLayout({
   children,
