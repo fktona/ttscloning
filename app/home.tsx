@@ -12,7 +12,7 @@ export default function Home() {
         </span>
       </div>
 
-      <div className="absolute bottom-0 flex justify-center  flex-col md:flex-row items-center gap-2 left-1/2 -translate-x-1/2 font-mono text-sm text-zinc-400">
+      {/* <div className="absolute bottom-0 flex justify-center  flex-col md:flex-row items-center gap-2 left-1/2 -translate-x-1/2 font-mono text-sm text-zinc-400">
         <CustomButton active={true} className="">
           ExCedGq3QtqWZ2Gjjxqy4GRXBdtf2MmGebnr3Tnpump
         </CustomButton>
@@ -25,17 +25,7 @@ export default function Home() {
         >
           <Image src="/paste.png" alt="logo" width={20} height={20} />
         </button>
-      </div>
+      </div> */}
     </div>
   );
-}
-
-{
-  /* <iframe
-        src="https://my.spline.design/particlenebula-d9955b985ebf97c5e777920e36e8b345/"
-        frameBorder="0"
-        width="100%"
-        height="100%"
-        className="absolute top-0 left-0 -z-10 "
-      ></iframe> */
 }

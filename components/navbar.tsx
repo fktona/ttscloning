@@ -77,7 +77,7 @@ export default function Nav() {
           ))}
         </div>
         <div className="flex items-center relative z-50 justify-center gap-5">
-          <CustomButton active>LAUNCH APP</CustomButton>
+          {/* <CustomButton active>LAUNCH APP</CustomButton> */}
 
           {/* Mobile Menu Trigger */}
           <button
@@ -134,17 +134,12 @@ export default function Nav() {
               </div>
               <div className="flex justify-center absolute w-full bottom-10 items-center md:hidden gap-8">
                 <Link
-                  href="https://github.com"
+                  href="https://github.com/TruthIntel/TruthAutonomy"
                   className="text-white transition-colors"
                 >
                   <Github size={20} />
                 </Link>
-                <Link
-                  href="https://github.com"
-                  className="text-white transition-colors"
-                >
-                  <Image src="/x.svg" alt="logo" width={20} height={20} />
-                </Link>
+
                 <Link
                   href="https://github.com"
                   className="text-white transition-colors"
@@ -152,10 +147,10 @@ export default function Nav() {
                   <Image src="/dex.svg" alt="logo" width={20} height={20} />
                 </Link>
                 <Link
-                  href="https://twitter.com"
+                  href="https://x.com/truthintel?s=21&t=Tfcin0ZusXLzV23JexYBuA"
                   className="hover:text-white text-white transition-colors"
                 >
-                  <Twitter size={20} />
+                  <Image src="/logo.svg" alt="logo" width={20} height={20} />
                 </Link>
               </div>
             </motion.div>
