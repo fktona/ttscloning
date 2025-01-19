@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import About from "../components/about";
 import HomePage from "../components/home";
-import Talk from "../components/talk";
+// import Talk from "../components/talk";
 import TokenomicsContent from "../components/token";
 import { useAppContext } from "./context/context";
 import { AIWrapper } from "@/components/AiWrapper";
