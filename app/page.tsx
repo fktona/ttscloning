@@ -26,11 +26,11 @@ export default function Home() {
             <About />
           </AIWrapper>
         )}
-        {state.talk && (
+        {/* {state.talk && (
           <AIWrapper key="talk">
             <Talk />
           </AIWrapper>
-        )}
+        )} */}
         {state.token && (
           <AIWrapper key="token">
             <TokenomicsContent />
