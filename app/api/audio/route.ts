@@ -7,7 +7,7 @@ export async function POST(request: Request) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-api-key": "5df155451fa84621872d48a38f7c8ebe",
+      "x-api-key": process.env.NEXT_PUBLIC_TTS_API_KEY,
     },
     body: JSON.stringify({
       text: text,

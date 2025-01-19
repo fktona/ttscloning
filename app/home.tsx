@@ -1,9 +1,5 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import Link from "next/link";
-import { Github, Twitter } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import CustomButton from "@/components/customButton";
 
