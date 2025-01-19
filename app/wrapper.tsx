@@ -1,4 +1,4 @@
-import exp from "constants";
+"use client";
 import { useAppContext } from "./context/context";
 
 function Wrapper({ children }: { children: React.ReactNode }) {
