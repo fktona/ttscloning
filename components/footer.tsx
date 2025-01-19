@@ -5,7 +5,7 @@ import Image from "next/image";
 
 function Footer() {
   return (
-    <footer className="  w-full p-4 bottom-0 absolute px-8     flex md:justify-between   justify-center  items-center text-zinc-500 text-sm">
+    <footer className="  w-full p-4 bottom-0 absolute px-8  max-w-screen-2xl mx-auto    flex md:justify-between   justify-center  items-center text-zinc-500 text-sm">
       <p>© truth_intelligence 2025 all right reserved</p>
       <div className="md:flex items-center w-full md:w-auto gap-8 hidden ">
         <Link

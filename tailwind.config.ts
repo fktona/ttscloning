@@ -1,4 +1,6 @@
+import { m } from "framer-motion";
 import type { Config } from "tailwindcss";
+import { PluginAPI } from "tailwindcss/types/config";
 
 export default {
   darkMode: ["class"],
@@ -62,5 +64,26 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    // require("tailwindcss-animate"),
+    (api: PluginAPI) => {
+      const { addUtilities } = api;
+      addUtilities({
+        ".bg-landing": {
+          backgroundImage: 'url("/landing.png")',
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: "fixed",
+          backgroundSize: "cover",
+        },
+        ".bg-landing-mobile": {
+          backgroundImage: 'url("/ini-mobile.png")',
+          backgroundAttachment: "fixed",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+        },
+      });
+    },
+    require("tailwindcss-animate"),
+  ],
 } satisfies Config;

@@ -3,7 +3,7 @@ import React from "react";
 
 function About() {
   return (
-    <div className="w-full h-full overflow-y-auto">
+    <div className="w-full h-full overflow-y-auto no-scrollbar">
       <div
         className="relative  md:max-w-3xl p-4 mx-auto
         

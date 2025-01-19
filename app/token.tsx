@@ -1,6 +1,6 @@
 export default function TokenomicsContent() {
   return (
-    <div className="grid lg:grid-cols-2 grid-cols-1 gap-8 h-full    lg:px-8 py-12 overflow-y-auto">
+    <div className="grid lg:grid-cols-2 grid-cols-1 gap-8 h-full    lg:px-8 py-12 overflow-y-auto no-scrollbar">
       <div className="relative">
         <div className="w-full h-full relative blurs rounded-lg">
           <iframe

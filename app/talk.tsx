@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Mic, Square, Play, Pause, VolumeX, Volume2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 const ReactMediaRecorder = React.lazy(() =>
   import("react-media-recorder").then((module) => ({
@@ -136,14 +137,24 @@ export default function Talk() {
       setIsMuted(!isMuted);
     }
   };
-
+  const endRef = useRef<HTMLDivElement>(null);
+  const scrollToBottom = () => {
+    endRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+  };
+  useEffect(() => {
+    scrollToBottom();
+  }, [history]);
   return (
     <div className="flex h-full absolute flex-col items-center justify-between gap-12 w-full">
-      <h1 className="text-4xl font-medium">Trump's Response</h1>
-      <div className="w-full h-[40%] max-w-xl mx-auto bg-white/30 overflow-y-auto">
+      <h1 className="text-4xl font-medium">Truth's Response</h1>
+      <div className="w-full h-[40%] px-8 max-w-6xl mx-auto text-md overflow-y-auto no-scrollbar">
         {history.map((response, index) => (
-          <div key={index} className="p-4 border-b border-gray-200">
-            <p className="text-gray-400 text-sm">{response}</p>
+          <div
+            ref={endRef}
+            key={index}
+            className="p-4 border-b border-gray-200"
+          >
+            <p className="">{response}</p>
           </div>
         ))}
       </div>
@@ -189,7 +200,11 @@ export default function Talk() {
                   } else {
                     startRecording();
                     setIsRecording(true);
-                    setCurrentStatus("Recording...");
+                    setCurrentStatus(
+                      status == "acquiring_media"
+                        ? "connecting..."
+                        : "Recording..."
+                    );
                   }
                 }}
               >
@@ -197,10 +212,15 @@ export default function Talk() {
                   isPaused ? (
                     <Play className="w-6 h-6 text-yellow-500" />
                   ) : (
-                    <Pause className="w-6 h-6 text-yellow-500" />
+                    <Image
+                      src="/white-mic.png"
+                      alt="pause"
+                      width={24}
+                      height={24}
+                    />
                   )
                 ) : (
-                  <Mic className="w-6 h-6 text-red-500" />
+                  <Image src="/mic.png" alt="mic" width={24} height={24} />
                 )}
               </Button>
               <Button
@@ -250,7 +270,7 @@ export default function Talk() {
           </div>
         )}
       />
-      <audio src={audioUrl} autoPlay />
+      {audioUrl && <audio src={audioUrl} autoPlay />}
     </div>
   );
 }
