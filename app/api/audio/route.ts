@@ -25,7 +25,7 @@ export async function POST(request: Request) {
     console.log("data", data);
 
     if (data.status === 200 && data.data.oss_url) {
-      return NextResponse.json({ audioUrl: data.data.oss_url });
+      return NextResponse.json({ audioUrl: data.data.oss_url, text: text });
     } else {
       return NextResponse.json(
         { error: "Failed to generate speech" },

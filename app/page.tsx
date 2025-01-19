@@ -14,7 +14,7 @@ export default function HomePage() {
   const { state } = useAppContext();
 
   return (
-    <div className="   text-white absolute  h-full w-full">
+    <div className="text-white absolute  h-full w-full">
       <AnimatePresence mode="wait">
         {state.home && (
           <AIWrapper key="home">

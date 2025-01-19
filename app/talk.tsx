@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Mic, Square, Play, Pause, VolumeX, Volume2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 const ReactMediaRecorder = React.lazy(() =>
   import("react-media-recorder").then((module) => ({
@@ -28,7 +29,7 @@ async function transcribeAudio(blob: Blob): Promise<string> {
   return data.text;
 }
 
-async function textToSpeech(text: string): Promise<string> {
+async function textToSpeech(text: string): Promise<any> {
   try {
     const response = await fetch("/api/audio", {
       method: "POST",
@@ -38,7 +39,7 @@ async function textToSpeech(text: string): Promise<string> {
     const data = await response.json();
     console.log("data", data);
     if (data.audioUrl) {
-      return data.audioUrl;
+      return data;
     } else {
       throw new Error("Failed to generate speech");
     }
@@ -97,12 +98,12 @@ export default function Talk() {
         const data = await response.json();
         setResponses(data);
         const newResponse = data[0].text;
-        //@ts-ignore
-        setHistory((prevHistory) => [...prevHistory, newResponse]);
 
         setCurrentStatus("Generating speech...");
         const speechUrl = await textToSpeech(newResponse);
-        setAudioUrl(speechUrl);
+        setAudioUrl(speechUrl.audioUrl);
+        //@ts-ignore
+        setHistory((prevHistory) => [...prevHistory, speechUrl.text]);
         setCurrentStatus("Ready to play");
       } else {
         console.error(
@@ -137,26 +138,41 @@ export default function Talk() {
       setIsMuted(!isMuted);
     }
   };
+
   const endRef = useRef<HTMLDivElement>(null);
   const scrollToBottom = () => {
     endRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   };
   useEffect(() => {
     scrollToBottom();
-  }, [history]);
+  }, [history, audioUrl]);
+
   return (
-    <div className="flex h-full absolute flex-col items-center justify-between gap-12 w-full">
-      <h1 className="text-4xl font-medium">Truth's Response</h1>
-      <div className="w-full h-[40%] px-8 max-w-6xl mx-auto text-md overflow-y-auto no-scrollbar">
+    <div className="flex h-full absolute flex-col items-center justify-around gap-12 w-full">
+      <h1 className="text-4xl font-medium">Trump's Response</h1>
+      <div
+        className="w-full h-[40%] md:px-8 md:max-w-6xl mx-auto overflow-y-auto no-scrollbar"
+        style={{ perspective: "1000px" }}
+      >
         {history.map((response, index) => (
           <div
-            ref={endRef}
             key={index}
-            className="p-4 border-b border-gray-200"
+            className="p-4 border-gray-200"
+            style={{
+              transform: `translateZ(${
+                (index - history.length + 1) * -50
+              }px) scale(${1 + (index - history.length + 1) * 0.1}) rotateX(${
+                (index - history.length + 1) * -5
+              }deg)`,
+              opacity: 1 - (history.length - index - 1) * 0.5,
+              transition: "all 0.3s ease-out",
+            }}
           >
-            <p className="">{response}</p>
+            <p className="text-white">{response}</p>
           </div>
         ))}
+        {/* End reference element */}
+        <div ref={endRef} />
       </div>
       <ReactMediaRecorder
         audio
@@ -167,108 +183,112 @@ export default function Talk() {
           pauseRecording,
           resumeRecording,
           status,
-        }) => (
-          <div className="flex flex-col items-center justify-center gap-4">
-            <p className="text-gray-400">{currentStatus}</p>
-            <div className="flex gap-4">
-              <Button
-                aria-label={
-                  isRecording
-                    ? isPaused
-                      ? "Resume Recording"
-                      : "Pause Recording"
-                    : "Start Recording"
-                }
-                size="icon"
-                variant="ghost"
-                className="w-12 h-12 rounded-full bg-gray-900 hover:bg-gray-800"
-                onClick={() => {
-                  if (isRecording) {
-                    if (isPaused) {
-                      resumeRecording();
-                      setIsPaused(false);
-                      setCurrentStatus(
-                        status == "acquiring_media"
-                          ? "connecting..."
-                          : "Recording..."
-                      );
-                    } else {
-                      pauseRecording();
-                      setIsPaused(true);
-                      setCurrentStatus("Paused");
-                    }
-                  } else {
-                    startRecording();
-                    setIsRecording(true);
-                    setCurrentStatus(
-                      status == "acquiring_media"
-                        ? "connecting..."
-                        : "Recording..."
-                    );
+        }) => {
+          useEffect(() => {
+            if (status === "acquiring_media") {
+              setCurrentStatus(" wait while we connect to audio...");
+            } else if (status === "recording") {
+              setCurrentStatus("Speaking now...");
+            } else if (status === "paused") {
+              setCurrentStatus("Paused");
+            } else if (status === "stopped") {
+              setCurrentStatus("Transcribing...");
+            } else {
+              setCurrentStatus("Click the mic to start conversation");
+            }
+          }, [status]);
+
+          return (
+            <div className="flex flex-col items-center justify-center gap-4">
+              <p className="text-gray-400">{currentStatus}</p>
+              <div className="flex gap-4">
+                <Button
+                  aria-label={
+                    isRecording
+                      ? isPaused
+                        ? "Resume Recording"
+                        : "Pause Recording"
+                      : "Start Recording"
                   }
-                }}
-              >
-                {isRecording ? (
-                  isPaused ? (
-                    <Play className="w-6 h-6 text-yellow-500" />
+                  size="icon"
+                  variant="ghost"
+                  className="w-12 h-12 rounded-full bg-gray-900 hover:bg-gray-800"
+                  onClick={() => {
+                    if (isRecording) {
+                      if (isPaused) {
+                        resumeRecording();
+                        setIsPaused(false);
+                      } else {
+                        pauseRecording();
+                        setIsPaused(true);
+                      }
+                    } else {
+                      startRecording();
+                      setIsRecording(true);
+                    }
+                  }}
+                >
+                  {isRecording ? (
+                    isPaused ? (
+                      <Play className="w-6 h-6 text-yellow-500" />
+                    ) : (
+                      <Image
+                        src="/white-mic.png"
+                        alt="pause"
+                        width={24}
+                        height={24}
+                      />
+                    )
                   ) : (
-                    <Image
-                      src="/white-mic.png"
-                      alt="pause"
-                      width={24}
-                      height={24}
-                    />
-                  )
-                ) : (
-                  <Image src="/mic.png" alt="mic" width={24} height={24} />
-                )}
-              </Button>
-              <Button
-                aria-label="Stop Recording"
-                size="icon"
-                variant="ghost"
-                className="w-12 h-12 rounded-full bg-gray-900 hover:bg-gray-800"
-                onClick={() => {
-                  stopRecording();
-                  setIsRecording(false);
-                  setIsPaused(false);
-                  setCurrentStatus("Processing...");
-                }}
-                disabled={!isRecording}
-              >
-                <Square className="w-6 h-6 text-red-500" />
-              </Button>
-              <Button
-                aria-label={isPlaying ? "Pause" : "Play"}
-                size="icon"
-                variant="ghost"
-                className="w-12 h-12 rounded-full bg-gray-900 hover:bg-gray-800"
-                onClick={togglePlayPause}
-                disabled={!audioUrl}
-              >
-                {isPlaying ? (
-                  <Pause className="w-6 h-6" />
-                ) : (
-                  <Play className="w-6 h-6" />
-                )}
-              </Button>
-              <Button
-                aria-label={isMuted ? "Unmute" : "Mute"}
-                size="icon"
-                variant="ghost"
-                className="w-12 h-12 rounded-full bg-gray-900 hover:bg-gray-800"
-                onClick={toggleMute}
-                disabled={!audioUrl}
-              >
-                {isMuted ? (
-                  <VolumeX className="w-6 h-6" />
-                ) : (
-                  <Volume2 className="w-6 h-6" />
-                )}
-              </Button>
+                    <Image src="/mic.png" alt="mic" width={24} height={24} />
+                  )}
+                </Button>
+                <Button
+                  aria-label="Stop Recording"
+                  size="icon"
+                  variant="ghost"
+                  className="w-12 h-12 rounded-full bg-gray-900 hover:bg-gray-800"
+                  onClick={() => {
+                    stopRecording();
+                    setIsRecording(false);
+                    setIsPaused(false);
+                  }}
+                  disabled={!isRecording || status === "acquiring_media"}
+                >
+                  <Square className="w-6 h-6 text-red-500" />
+                </Button>
+                <Button
+                  aria-label={isPlaying ? "Pause" : "Play"}
+                  size="icon"
+                  variant="ghost"
+                  className="w-12 h-12 rounded-full bg-gray-900 hover:bg-gray-800"
+                  onClick={togglePlayPause}
+                  disabled={!audioUrl}
+                >
+                  {isPlaying ? (
+                    <Pause className="w-6 h-6" />
+                  ) : (
+                    <Play className="w-6 h-6" />
+                  )}
+                </Button>
+                <Button
+                  aria-label={isMuted ? "Unmute" : "Mute"}
+                  size="icon"
+                  variant="ghost"
+                  className="w-12 h-12 rounded-full bg-gray-900 hover:bg-gray-800"
+                  onClick={toggleMute}
+                  disabled={!audioUrl}
+                >
+                  {isMuted ? (
+                    <VolumeX className="w-6 h-6" />
+                  ) : (
+                    <Volume2 className="w-6 h-6" />
+                  )}
+                </Button>
+              </div>
             </div>
-          </div>
-        )}
+          );
+        }}
       />
       {audioUrl && <audio src={audioUrl} autoPlay />}
     </div>

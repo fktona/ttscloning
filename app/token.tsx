@@ -1,8 +1,8 @@
 export default function TokenomicsContent() {
   return (
-    <div className="grid lg:grid-cols-2 grid-cols-1 gap-8 h-full    lg:px-8 py-12 overflow-y-auto no-scrollbar">
-      <div className="relative">
-        <div className="w-full h-full relative blurs rounded-lg">
+    <div className="grid lg:grid-cols-2 grid-cols-1  gap-8 h-full    lg:px-8 py-12 overflow-y-auto no-scrollbar">
+      <div className="relative flex flex-col justify-center">
+        <div className="w-full h-full relative max-h-[1000px] blurs rounded-lg">
           <iframe
             src="https://my.spline.design/particlescopy-6ff2282b232aefa774235464dd70e2be/"
             frameBorder="0"
@@ -10,6 +10,7 @@ export default function TokenomicsContent() {
             height="100%"
             className="absolute top-0 left-0 w-full  h-full"
           ></iframe>
+          <div className="absolute bottom-0 w-full h-16 bg-zinc-800"></div>
         </div>
       </div>
 

@@ -5,6 +5,7 @@ import {
   useState,
   Dispatch,
   SetStateAction,
+  useEffect,
 } from "react";
 
 interface AppState {
@@ -17,9 +18,11 @@ interface AppState {
 interface AppContextProps {
   state: AppState;
   toggleState: (key: keyof AppState) => void;
+  show: boolean;
 }
 
 export const AppContext = createContext<AppContextProps>({
+  show: false,
   state: {
     home: true,
     about: false,
@@ -41,6 +44,10 @@ export default function AppProvider({
     token: false,
   });
 
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    state.home ? setShow(false) : setShow(true);
+  }, [state]);
   const toggleState = (key: keyof AppState) => {
     console.log(state);
     setState({
@@ -53,7 +60,7 @@ export default function AppProvider({
   };
 
   return (
-    <AppContext.Provider value={{ state, toggleState }}>
+    <AppContext.Provider value={{ state, toggleState, show }}>
       {children}
     </AppContext.Provider>
   );

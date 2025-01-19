@@ -79,3 +79,12 @@ body {
   background: url("/circle.png") lightgray 50% / cover no-repeat;
   mix-blend-mode: plus-lighter;
 }
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}

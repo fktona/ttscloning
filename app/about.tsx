@@ -1,6 +1,7 @@
 import Footer from "@/components/footer";
 import React from "react";
 
+import Markdown from "react-markdown";
 function About() {
   return (
     <div className="w-full h-full overflow-y-auto no-scrollbar">
@@ -25,28 +26,59 @@ function About() {
         <div
           className="w-6
        aspect-square border-b-2 border-r-2 absolute bottom-0 right-0 border-white"
-        />
-        <p className="text-white mx-auto blurs md:p-4 p-2 leading-relaxed text-[16px]">
-          conversation is at the heart of connection—it sparks ideas, builds
-          relationships, and drives interaction. it's how we share who we are
-          and what we stand for. axis was created to bring that same human
-          essence to the digital world. axis is a framework that empowers you to
-          create conversational agents with their own personalities. whether
-          it's an assistant for your business, a translator with flair, or an
-          entertaining companion, axis helps you bring these agents to life with
-          ease. for now, creating agents with axis requires some hands-on
-          work—but that's part of the journey! our vision is to make it easier
-          for everyone with a simple, intuitive dashboard where you'll be able
-          to generate, customize, and manage agents effortlessly. while we work
-          toward that, you can explore our demo on the site to see how
-          conversations come to life and get inspired by what's possible. axis
-          isn't just about building agents; it's about creating meaningful
-          digital interactions. with a vision that blends cutting-edge
-          technology and human creativity, axis opens up new possibilities for
-          how people and ai connect. create agents that feel alive, spark
-          conversations, and leave lasting impressions. conversation,
-          reimagined.
-        </p>
+        />{" "}
+        <div className="border border-white/20 p-8 backdrop-blur-sm">
+          <div className="space-y-6 font-byte lg:text-[28px] text-[21px] ">
+            <h1 className="">Unfiltered. Unchallenged. Uncensored.</h1>
+            <h2 className="">Truth.</h2>
+
+            <p className="leading-relaxed">
+              Experience the first ever AI intelligence to land on Truth Social.
+              Explore interactions with our Agent who's able to compile data
+              from the entirety of Truth Social's platform to form its own
+              opinions on current ongoing events.
+            </p>
+
+            <div className="space-y-2">
+              <p>
+                Through applied use of the truthbrush GitHub
+                <a
+                  target="_blank"
+                  href="https://github.com/stanfordio/truthbrush"
+                >
+                  {" "}
+                  (https://github.com/stanfordio/truthbrush)
+                </a>{" "}
+                our model can:
+              </p>
+              <ul className="list-disc pl-6 space-y-1">
+                <li>Search for users, statuses, groups, or hashtags</li>
+                <li>Pull a user's statuses</li>
+                <li>Pull the list of "People to Follow" or suggested users</li>
+                <li>Pull "trending" hashtags</li>
+                <li>Pull "trending" Truth posts</li>
+                <li>Pull ads</li>
+                <li>Pull a user's metadata</li>
+                <li>Pull the list of users who liked a post</li>
+                <li>Pull the list of comments on a post</li>
+                <li>Pull "trending" groups</li>
+                <li>Pull list of suggested groups</li>
+                <li>Pull "trending" group hashtags</li>
+                <li>Pull posts from group timeline</li>
+              </ul>
+            </div>
+
+            <p className="leading-relaxed">
+              With this information, our model can then formulate its own
+              thoughts and interactions based off its own baseline personality
+              formulated around a conservative mindset. Speak directly to our
+              model in a vocal environment using our platform. Enter a new
+              sphere of AI under a different environment and pretense.
+            </p>
+
+            <p className="text-xl">Discover Truth Intelligence.</p>
+          </div>
+        </div>
       </div>
     </div>
   );
