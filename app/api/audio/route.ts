@@ -7,7 +7,7 @@ export async function POST(request: Request) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-api-key": process.env.NEXT_PUBLIC_TTS_API_KEY,
+      "x-api-key": process.env.NEXT_PUBLIC_TTS_API_KEY as string,
     },
     body: JSON.stringify({
       text: text,
@@ -19,6 +19,7 @@ export async function POST(request: Request) {
   try {
     const response = await fetch(
       "https://api.topmediai.com/v1/text2speech",
+      //@ts-ignore
       options
     );
     const data = await response.json();
